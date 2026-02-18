@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/fragments :: head('Modifica offerta')}" />
+
+<body>
+    <div th:replace="~{fragments/header :: header('')}" />
+
+    <main class="container">
+        <h3 class="text-center my-3">Modifica l'offerta [[${offer.title}]]</h3>
+        <h4 class="text-center my-3">per la pizza [[${offer.pizza.name}]]</h4>
+
+        <form class="px-5" th:action="@{/offers/edit/{id}(id = ${offer.id})}" method="post" th:object="${offer}">
+            <input id="input-pizza-id" type="hidden" th:field="*{pizza}">
+
+            <div class="mb-3">
+                <label class="form-label" for="input-title">Titolo: </label>
+                <input id="input-title" class="form-control" type="text" th:field="*{title}" th:errorClass="is-invalid">
+                <div th:if="${#fields.hasErrors('title')}" class="invalid-feedback">
+                    <ul>
+                        <li th:each="err : ${#fields.errors('title')}" th:text="${err}" />
+                    </ul>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col">
+                    <label class="form-label" for="input-start">Data di Inizio: </label>
+                    <input id="input-start" class="form-control" type="date" th:field="*{startDate}">
+                    <div th:if="${#fields.hasErrors('startDate')}" class="invalid-feedback">
+                        <ul>
+                            <li th:each="err : ${#fields.errors('startDate')}" th:text="${err}" />
+                        </ul>
+                    </div>
+
+                </div>
+                <div class="col">
+                    <label class="form-label" for="input-end">Data di Fine: </label>
+                    <input id="input-end" class="form-control" type="date" th:field="*{endDate}"
+                        th:errorClass="is-invalid">
+                    <div th:if="${#fields.hasErrors('endDate')}" class="invalid-feedback">
+                        <ul>
+                            <li th:each="err : ${#fields.errors('endDate')}" th:text="${err}" />
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn btn-primary" type="submit">Modifica</button>
+        </form>
+
+    </main>
+
+    <div th:replace="~{fragments/fragments :: bootstrap}" />
+</body>
+
+</html>

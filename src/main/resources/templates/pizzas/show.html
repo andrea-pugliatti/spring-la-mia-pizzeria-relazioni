@@ -55,7 +55,9 @@
                         <td>[[*{title}]]</td>
                         <td>[[*{startDate}]]</td>
                         <td>[[*{endDate}]]</td>
-
+                        <td>
+                            <a class="btn btn-success btn-sm" th:href="@{/offers/edit/{id}(id = *{id})}">Modifica</a>
+                        </td>
                     </tr>
                 </tbody>
             </table>

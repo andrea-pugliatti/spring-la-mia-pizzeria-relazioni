@@ -122,7 +122,6 @@ public class PizzaController {
         newOffer.setPizza(pizza.get());
 
         model.addAttribute("offer", newOffer);
-        // model.addAttribute("pizza", pizza.get());
 
         return "offers/create";
     }
