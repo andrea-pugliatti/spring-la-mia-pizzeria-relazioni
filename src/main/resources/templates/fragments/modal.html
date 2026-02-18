@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<body>
+    <th:block th:fragment="trigger(id)">
+        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
+            th:data-bs-target="'#deleteModal-' + ${id}">
+            Elimina
+        </button>
+    </th:block>
+
+    <th:block th:fragment="modal(title, id)">
+        <div class="modal fade" th:id="'deleteModal-' + ${id}" tabindex="-1" aria-labelledby="deleteModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="deleteModalLabel">Elimina [[${title}]]</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Sei veramente sicuro di voler eliminare la pizza "[[${title}]]"?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
+                        <form style="display: inline;" th:action="@{/pizzas/delete/{id}(id = ${id})}" method="post">
+                            <button type="submit" class="btn btn-danger">Elimina</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </th:block>
+
+</body>
+
+</html>

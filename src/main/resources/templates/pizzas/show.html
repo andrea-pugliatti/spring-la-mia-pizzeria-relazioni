@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/fragments :: head(${pizza.name})}" />
+
+<body>
+    <div th:replace="~{fragments/header :: header('')}" />
+
+    <main class="container d-flex justify-content-center">
+
+        <div class="card text-center my-5" th:object="${pizza}">
+            <div class="row g-0">
+                <div class="col-md-8">
+                    <img th:src="*{image}" class="img-fluid rounded-start" alt="">
+                </div>
+                <div class="col-md-4" style="min-width: fit-content;">
+                    <div class="card-body">
+                        <h3 class="card-title">[[*{name}]]</h3>
+                        <p class="card-text">€[[*{price}]]</p>
+                        <p class="card-text">[[*{description}]]</p>
+
+                        <div>
+                            <a class="btn btn-success btn-sm" th:href="@{/pizzas/edit/{id}(id = *{id})}">Modifica</a>
+                            <div th:replace="~{fragments/modal :: trigger(*{id})}" />
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div th:replace="~{fragments/modal :: modal(${pizza.name}, ${pizza.id})}" />
+    </main>
+
+    <div th:replace="~{fragments/fragments :: bootstrap}" />
+</body>
+
+</html>

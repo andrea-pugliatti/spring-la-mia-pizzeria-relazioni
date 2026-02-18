@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/fragments :: head('Nuova pizza')}" />
+
+<body>
+    <div th:replace="~{fragments/header :: header('')}" />
+
+    <main class="container">
+        <h3 class="text-center my-3">Modifica [[${pizza.name}]]</h3>
+
+        <form class="px-5" th:action="@{/pizzas/edit/{id}(id = ${pizza.id})}" method="post" th:object="${pizza}">
+            <div class="mb-3">
+                <label class="form-label" for="input-name">Nome: </label>
+                <input id="input-name" class="form-control" type="text" th:field="*{name}" th:errorClass="is-invalid">
+                <div th:if="${#fields.hasErrors('name')}" class="invalid-feedback">
+                    <ul>
+                        <li th:each="err : ${#fields.errors('name')}" th:text="${err}" />
+                    </ul>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="input-description">Descrizione: </label>
+                <textarea id="input-description" class="form-control" type="text" th:field="*{description}"
+                    rows="3"></textarea>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="input-image">Immagine / url: </label>
+                <input id="input-image" class="form-control" type="text" th:field="*{image}">
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="input-price">Prezzo: </label>
+                <input id="input-price" class="form-control" type="text" th:field="*{price}" th:errorClass="is-invalid">
+                <div th:if="${#fields.hasErrors('price')}" class="invalid-feedback">
+                    <ul>
+                        <li th:each="err : ${#fields.errors('price')}" th:text="${err}" />
+                    </ul>
+                </div>
+            </div>
+
+            <button class="btn btn-primary" type="submit">Modifica</button>
+        </form>
+
+    </main>
+
+    <div th:replace="~{fragments/fragments :: bootstrap}" />
+</body>
+
+</html>
