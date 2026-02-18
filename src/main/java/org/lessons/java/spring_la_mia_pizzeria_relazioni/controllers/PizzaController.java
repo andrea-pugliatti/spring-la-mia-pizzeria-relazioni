@@ -110,4 +110,21 @@ public class PizzaController {
         return "redirect:/pizzas";
     }
 
+    @GetMapping("/{id}/create-offer")
+    public String getCreateOffer(@PathVariable("id") Integer pizzaId, Model model) {
+        Optional<Pizza> pizza = pizzaRepository.findById(pizzaId);
+
+        if (pizza.isEmpty()) {
+            return "pizzas/404";
+        }
+
+        Offer newOffer = new Offer();
+        newOffer.setPizza(pizza.get());
+
+        model.addAttribute("offer", newOffer);
+        // model.addAttribute("pizza", pizza.get());
+
+        return "offers/create";
+    }
+
 }

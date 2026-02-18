@@ -32,7 +32,11 @@
 
 
         <div>
-            <h2>Offerte</h2>
+            <div class="d-flex gap-2 justify-content-between align-items-center">
+                <h2>Offerte speciali</h2>
+                <a th:href="@{{id}/create-offer(id = ${pizza.id})}" class="btn btn-primary">Crea una nuova offerta
+                    speciale</a>
+            </div>
             <div class="text-center fs-4 fw-700" th:unless="${offers.size() > 0}">Non ci sono offerte disponibili</div>
 
             <table class="table" th:if="${offers.size() > 0}">
@@ -42,6 +46,7 @@
                         <th scope="col">Offerta</th>
                         <th scope="col">Data di Inizio</th>
                         <th scope="col">Data di Fine</th>
+                        <th scope="col"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -50,6 +55,7 @@
                         <td>[[*{title}]]</td>
                         <td>[[*{startDate}]]</td>
                         <td>[[*{endDate}]]</td>
+
                     </tr>
                 </tbody>
             </table>
