@@ -6,7 +6,7 @@
 <body>
     <div th:replace="~{fragments/header :: header('')}" />
 
-    <main class="container d-flex justify-content-center">
+    <main class="container d-flex flex-column align-items-center">
 
         <div class="card text-center my-5" th:object="${pizza}">
             <div class="row g-0">
@@ -28,6 +28,31 @@
                 </div>
 
             </div>
+        </div>
+
+
+        <div>
+            <h2>Offerte</h2>
+            <div class="text-center fs-4 fw-700" th:unless="${offers.size() > 0}">Non ci sono offerte disponibili</div>
+
+            <table class="table" th:if="${offers.size() > 0}">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Offerta</th>
+                        <th scope="col">Data di Inizio</th>
+                        <th scope="col">Data di Fine</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="offer: ${offers}" th:object="${offer}">
+                        <th scope="row">[[*{id}]]</th>
+                        <td>[[*{title}]]</td>
+                        <td>[[*{startDate}]]</td>
+                        <td>[[*{endDate}]]</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
 
         <div th:replace="~{fragments/modal :: modal(${pizza.name}, ${pizza.id})}" />
