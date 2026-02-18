@@ -1,12 +1,14 @@
 package org.lessons.java.spring_la_mia_pizzeria_relazioni.models;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -33,6 +35,9 @@ public class Pizza {
     @Positive(message = "Il prezzo deve essere positivo!")
     @NotNull(message = "Il prezzo deve essere inserito!")
     private BigDecimal price;
+
+    @OneToMany(mappedBy = "pizza")
+    private List<Offer> offers;
 
     public Integer getId() {
         return id;
