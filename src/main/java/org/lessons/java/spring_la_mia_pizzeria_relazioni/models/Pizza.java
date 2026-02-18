@@ -3,6 +3,7 @@ package org.lessons.java.spring_la_mia_pizzeria_relazioni.models;
 import java.math.BigDecimal;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -36,7 +37,7 @@ public class Pizza {
     @NotNull(message = "Il prezzo deve essere inserito!")
     private BigDecimal price;
 
-    @OneToMany(mappedBy = "pizza")
+    @OneToMany(mappedBy = "pizza", cascade = CascadeType.REMOVE)
     private List<Offer> offers;
 
     public Integer getId() {

@@ -104,7 +104,15 @@ public class PizzaController {
     }
 
     @PostMapping("/delete/{id}")
-    public String postMethodName(Model model, @PathVariable("id") Integer pizzaId) {
+    public String postDelete(Model model, @PathVariable("id") Integer pizzaId) {
+        Pizza pizza = pizzaRepository.findById(pizzaId).get();
+
+        List<Offer> offers = offerRepository.findByPizza(pizza);
+
+        for (Offer offer : offers) {
+            offerRepository.delete(offer);
+        }
+
         pizzaRepository.deleteById(pizzaId);
 
         return "redirect:/pizzas";
