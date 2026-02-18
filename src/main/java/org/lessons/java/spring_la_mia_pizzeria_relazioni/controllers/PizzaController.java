@@ -54,7 +54,7 @@ public class PizzaController {
             return "pizzas/404";
         }
 
-        List<Offer> offers = offerRepository.findAll();
+        List<Offer> offers = offerRepository.findByPizza(pizza.get());
 
         model.addAttribute("pizza", pizza.get());
         model.addAttribute("offers", offers);
