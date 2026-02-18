@@ -23,6 +23,18 @@ public class OfferController {
     @Autowired
     private OfferRepository offerRepository;
 
+    @GetMapping("/show/{id}")
+    public String getMethodName(@PathVariable("id") Integer offerId, Model model) {
+        Optional<Offer> offer = offerRepository.findById(offerId);
+
+        if (offer.isEmpty()) {
+            return "redirect:/pizzas";
+        }
+
+        model.addAttribute("offer", offer.get());
+        return "offers/show";
+    }
+
     @PostMapping("/create")
     public String postStore(@Valid @ModelAttribute("offer") Offer offerForm, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
