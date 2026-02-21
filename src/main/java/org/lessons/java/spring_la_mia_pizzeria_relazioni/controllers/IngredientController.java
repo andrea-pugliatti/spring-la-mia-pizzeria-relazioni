@@ -27,7 +27,7 @@ public class IngredientController {
     }
 
     @GetMapping
-    public String getIndex(Model model) {
+    public String index(Model model) {
         List<Ingredient> ingredients = ingredientRepository.findAll();
 
         model.addAttribute("ingredients", ingredients);
@@ -37,7 +37,7 @@ public class IngredientController {
     }
 
     @PostMapping("/create")
-    public String postStore(
+    public String store(
             @Valid @ModelAttribute("new_ingredient") Ingredient ingredientForm,
             BindingResult bindingResult,
             Model model) {
@@ -53,7 +53,7 @@ public class IngredientController {
     }
 
     @PostMapping("/delete/{id}")
-    public String postDelete(Model model, @PathVariable("id") Integer ingredientId) {
+    public String delete(Model model, @PathVariable("id") Integer ingredientId) {
         Ingredient ingredient = ingredientRepository.findById(ingredientId).get();
 
         for (Pizza pizza : ingredient.getPizzas()) {

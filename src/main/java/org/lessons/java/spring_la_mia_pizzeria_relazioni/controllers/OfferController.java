@@ -26,7 +26,7 @@ public class OfferController {
     }
 
     @GetMapping("/show/{id}")
-    public String getMethodName(@PathVariable("id") Integer offerId, Model model) {
+    public String show(@PathVariable("id") Integer offerId, Model model) {
         Optional<Offer> offer = offerRepository.findById(offerId);
 
         if (offer.isEmpty()) {
@@ -39,7 +39,7 @@ public class OfferController {
     }
 
     @PostMapping("/create")
-    public String postStore(@Valid @ModelAttribute("offer") Offer offerForm, BindingResult bindingResult, Model model) {
+    public String store(@Valid @ModelAttribute("offer") Offer offerForm, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             return "offers/create";
         }
@@ -50,7 +50,7 @@ public class OfferController {
     }
 
     @GetMapping("/edit/{id}")
-    public String getEdit(@PathVariable("id") Integer offerId, Model model) {
+    public String edit(@PathVariable("id") Integer offerId, Model model) {
         Optional<Offer> offer = offerRepository.findById(offerId);
 
         if (offer.isEmpty()) {
@@ -63,7 +63,7 @@ public class OfferController {
     }
 
     @PostMapping("/edit/{id}")
-    public String postUpdate(@Valid @ModelAttribute("offer") Offer offerForm, BindingResult bindingResult,
+    public String update(@Valid @ModelAttribute("offer") Offer offerForm, BindingResult bindingResult,
             Model model) {
         if (bindingResult.hasErrors()) {
             return "/offers/edit";
@@ -75,7 +75,7 @@ public class OfferController {
     }
 
     @PostMapping("/delete/{id}")
-    public String postMethodName(@PathVariable("id") Integer offerId, Model model) {
+    public String delete(@PathVariable("id") Integer offerId, Model model) {
         Integer pizzaId = offerRepository.findById(offerId).get().getPizza().getId();
 
         offerRepository.deleteById(offerId);

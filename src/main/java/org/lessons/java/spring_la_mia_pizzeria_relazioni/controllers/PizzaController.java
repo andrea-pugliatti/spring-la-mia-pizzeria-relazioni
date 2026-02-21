@@ -38,7 +38,7 @@ public class PizzaController {
     }
 
     @GetMapping
-    public String getIndex(Model model, @RequestParam(value = "q", required = false) String name) {
+    public String index(Model model, @RequestParam(value = "q", required = false) String name) {
         List<Pizza> list;
 
         if (name == null) {
@@ -54,7 +54,7 @@ public class PizzaController {
     }
 
     @GetMapping("/{id}")
-    public String getShow(Model model, @PathVariable("id") Integer pizzaId) {
+    public String show(Model model, @PathVariable("id") Integer pizzaId) {
         Optional<Pizza> pizza = pizzaRepository.findById(pizzaId);
 
         if (pizza.isEmpty()) {
@@ -68,14 +68,14 @@ public class PizzaController {
     }
 
     @GetMapping("/create")
-    public String getCreate(Model model) {
+    public String create(Model model) {
         model.addAttribute("pizza", new Pizza());
         model.addAttribute("ingredients", ingredientRepository.findAll());
         return "pizzas/create";
     }
 
     @PostMapping("/create")
-    public String postStore(@Valid @ModelAttribute("pizza") Pizza pizzaForm, BindingResult bindingResult, Model model) {
+    public String store(@Valid @ModelAttribute("pizza") Pizza pizzaForm, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("ingredients", ingredientRepository.findAll());
             return "/pizzas/create";
@@ -86,7 +86,7 @@ public class PizzaController {
     }
 
     @GetMapping("/edit/{id}")
-    public String getEdit(Model model, @PathVariable("id") Integer pizzaId) {
+    public String edit(Model model, @PathVariable("id") Integer pizzaId) {
         Optional<Pizza> pizza = pizzaRepository.findById(pizzaId);
         model.addAttribute("ingredients", ingredientRepository.findAll());
 
@@ -100,7 +100,7 @@ public class PizzaController {
     }
 
     @PostMapping("/edit/{id}")
-    public String postUpdate(@Valid @ModelAttribute("pizza") Pizza pizzaForm, BindingResult bindingResult,
+    public String update(@Valid @ModelAttribute("pizza") Pizza pizzaForm, BindingResult bindingResult,
             Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("ingredients", ingredientRepository.findAll());
@@ -113,7 +113,7 @@ public class PizzaController {
     }
 
     @PostMapping("/delete/{id}")
-    public String postDelete(Model model, @PathVariable("id") Integer pizzaId) {
+    public String delete(Model model, @PathVariable("id") Integer pizzaId) {
         Pizza pizza = pizzaRepository.findById(pizzaId).get();
 
         List<Offer> offers = offerRepository.findByPizza(pizza);
