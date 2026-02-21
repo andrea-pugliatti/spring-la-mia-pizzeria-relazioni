@@ -7,7 +7,6 @@ import org.lessons.java.spring_la_mia_pizzeria_relazioni.models.Offer;
 import org.lessons.java.spring_la_mia_pizzeria_relazioni.models.Pizza;
 import org.lessons.java.spring_la_mia_pizzeria_relazioni.repositories.OfferRepository;
 import org.lessons.java.spring_la_mia_pizzeria_relazioni.repositories.PizzaRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,16 +23,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 @RequestMapping("/pizzas")
 public class PizzaController {
-
-    @Autowired
     private PizzaRepository pizzaRepository;
-
-    @Autowired
     private OfferRepository offerRepository;
+
+    public PizzaController(PizzaRepository pizzaRepository, OfferRepository offerRepository) {
+        this.pizzaRepository = pizzaRepository;
+        this.offerRepository = offerRepository;
+    }
 
     @GetMapping
     public String getIndex(Model model, @RequestParam(value = "q", required = false) String name) {
-        List<Pizza> list = null;
+        List<Pizza> list;
 
         if (name == null) {
             list = pizzaRepository.findAll();
@@ -43,6 +43,7 @@ public class PizzaController {
 
         model.addAttribute("pizzas", list);
         model.addAttribute("query", name);
+
         return "pizzas/index";
     }
 
@@ -51,13 +52,14 @@ public class PizzaController {
         Optional<Pizza> pizza = pizzaRepository.findById(pizzaId);
 
         if (pizza.isEmpty()) {
-            return "pizzas/404";
+            return "redirect:/pizzas";
         }
 
         List<Offer> offers = offerRepository.findByPizza(pizza.get());
 
         model.addAttribute("pizza", pizza.get());
         model.addAttribute("offers", offers);
+
         return "pizzas/show";
     }
 
@@ -76,6 +78,7 @@ public class PizzaController {
         }
 
         pizzaRepository.save(pizzaForm);
+
         return "redirect:/pizzas";
     }
 
@@ -100,6 +103,7 @@ public class PizzaController {
         }
 
         pizzaRepository.save(pizzaForm);
+
         return "redirect:/pizzas";
     }
 
@@ -123,7 +127,7 @@ public class PizzaController {
         Optional<Pizza> pizza = pizzaRepository.findById(pizzaId);
 
         if (pizza.isEmpty()) {
-            return "pizzas/404";
+            return "redirect:/pizzas";
         }
 
         Offer newOffer = new Offer();

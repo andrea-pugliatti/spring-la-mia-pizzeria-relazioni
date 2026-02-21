@@ -3,6 +3,8 @@ package org.lessons.java.spring_la_mia_pizzeria_relazioni.models;
 import java.math.BigDecimal;
 import java.util.List;
 
+import org.hibernate.validator.constraints.URL;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -31,6 +33,7 @@ public class Pizza {
     @Lob
     private String description;
 
+    @URL
     private String image;
 
     @Positive(message = "Il prezzo deve essere positivo!")
@@ -78,6 +81,14 @@ public class Pizza {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public List<Offer> getOffers() {
+        return offers;
+    }
+
+    public void setOffers(List<Offer> offers) {
+        this.offers = offers;
     }
 
     @Override

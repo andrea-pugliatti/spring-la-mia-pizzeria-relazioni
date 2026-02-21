@@ -4,7 +4,6 @@ import java.util.Optional;
 
 import org.lessons.java.spring_la_mia_pizzeria_relazioni.models.Offer;
 import org.lessons.java.spring_la_mia_pizzeria_relazioni.repositories.OfferRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,8 +19,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 @RequestMapping("/offers")
 public class OfferController {
-    @Autowired
     private OfferRepository offerRepository;
+
+    public OfferController(OfferRepository offerRepository) {
+        this.offerRepository = offerRepository;
+    }
 
     @GetMapping("/show/{id}")
     public String getMethodName(@PathVariable("id") Integer offerId, Model model) {
@@ -32,6 +34,7 @@ public class OfferController {
         }
 
         model.addAttribute("offer", offer.get());
+
         return "offers/show";
     }
 
@@ -41,9 +44,9 @@ public class OfferController {
             return "offers/create";
         }
 
-        offerRepository.save(offerForm);
+        Offer offer = offerRepository.save(offerForm);
 
-        return "redirect:/pizzas/" + offerForm.getPizza().getId();
+        return "redirect:/pizzas/" + offer.getPizza().getId();
     }
 
     @GetMapping("/edit/{id}")
@@ -55,6 +58,7 @@ public class OfferController {
         }
 
         model.addAttribute("offer", offer.get());
+
         return "/offers/edit";
     }
 
@@ -65,8 +69,9 @@ public class OfferController {
             return "/offers/edit";
         }
 
-        offerRepository.save(offerForm);
-        return "redirect:/pizzas/" + offerForm.getPizza().getId();
+        Offer offer = offerRepository.save(offerForm);
+
+        return "redirect:/pizzas/" + offer.getPizza().getId();
     }
 
     @PostMapping("/delete/{id}")

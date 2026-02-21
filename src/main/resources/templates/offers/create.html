@@ -26,14 +26,15 @@
 
                 <div class="col">
                     <label class="form-label" for="input-start">Data di Inizio: </label>
-                    <input id="input-start" class="form-control" type="date" th:field="*{startDate}">
+                    <input id="input-start" class="form-control" type="date" th:field="*{startDate}"
+                        th:errorClass="is-invalid">
                     <div th:if="${#fields.hasErrors('startDate')}" class="invalid-feedback">
                         <ul>
                             <li th:each="err : ${#fields.errors('startDate')}" th:text="${err}" />
                         </ul>
                     </div>
-
                 </div>
+
                 <div class="col">
                     <label class="form-label" for="input-end">Data di Fine: </label>
                     <input id="input-end" class="form-control" type="date" th:field="*{endDate}"

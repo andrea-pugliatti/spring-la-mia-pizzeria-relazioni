@@ -25,7 +25,8 @@
             <div class="row mb-3">
                 <div class="col">
                     <label class="form-label" for="input-start">Data di Inizio: </label>
-                    <input id="input-start" class="form-control" type="date" th:field="*{startDate}">
+                    <input id="input-start" class="form-control" type="date" th:field="*{startDate}"
+                        th:errorClass="is-invalid">
                     <div th:if="${#fields.hasErrors('startDate')}" class="invalid-feedback">
                         <ul>
                             <li th:each="err : ${#fields.errors('startDate')}" th:text="${err}" />
