@@ -18,6 +18,12 @@
                         <h3 class="card-title">[[*{name}]]</h3>
                         <p class="card-text">€[[*{price}]]</p>
                         <p class="card-text">[[*{description}]]</p>
+                        <p class="card-text" th:if="${ingredients.size > 0}">
+                            <span class="fw-bold"> Ingredienti: </span>
+                            <span th:each="ingredient, status : ${ingredients}">
+                                [[${ingredient}]]<th:block th:if="${!status.last}">, </th:block>
+                            </span>
+                        </p>
 
                         <div>
                             <a class="btn btn-success btn-sm" th:href="@{/pizzas/edit/{id}(id = *{id})}">Modifica</a>

@@ -46,4 +46,9 @@ public class Ingredient {
     public void setPizzas(List<Pizza> pizzas) {
         this.pizzas = pizzas;
     }
+
+    @Override
+    public String toString() {
+        return String.format("%s", name);
+    }
 }

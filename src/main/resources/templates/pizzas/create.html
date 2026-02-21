@@ -37,6 +37,15 @@
                     </ul>
                 </div>
             </div>
+            <div class="mb-3">
+                <div class="form-check" th:each="ingredient: ${ingredients}">
+                    <input class="form-check-input" type="checkbox" th:value="${ingredient.id}"
+                        th:id="|check-${ingredient.id}|" th:field="${pizza.ingredients}">
+                    <label class="form-check-label" th:for="|check-${ingredient.id}|">
+                        [[${ingredient}]]
+                    </label>
+                </div>
+            </div>
 
             <button class="btn btn-primary" type="submit">Crea</button>
         </form>

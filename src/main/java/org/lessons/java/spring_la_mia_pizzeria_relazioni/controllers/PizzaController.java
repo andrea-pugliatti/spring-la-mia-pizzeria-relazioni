@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.lessons.java.spring_la_mia_pizzeria_relazioni.models.Offer;
 import org.lessons.java.spring_la_mia_pizzeria_relazioni.models.Pizza;
+import org.lessons.java.spring_la_mia_pizzeria_relazioni.repositories.IngredientRepository;
 import org.lessons.java.spring_la_mia_pizzeria_relazioni.repositories.OfferRepository;
 import org.lessons.java.spring_la_mia_pizzeria_relazioni.repositories.PizzaRepository;
 import org.springframework.stereotype.Controller;
@@ -25,10 +26,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class PizzaController {
     private PizzaRepository pizzaRepository;
     private OfferRepository offerRepository;
+    private IngredientRepository ingredientRepository;
 
-    public PizzaController(PizzaRepository pizzaRepository, OfferRepository offerRepository) {
+    public PizzaController(
+            PizzaRepository pizzaRepository,
+            OfferRepository offerRepository,
+            IngredientRepository ingredientRepository) {
         this.pizzaRepository = pizzaRepository;
         this.offerRepository = offerRepository;
+        this.ingredientRepository = ingredientRepository;
     }
 
     @GetMapping
@@ -55,36 +61,34 @@ public class PizzaController {
             return "redirect:/pizzas";
         }
 
-        List<Offer> offers = offerRepository.findByPizza(pizza.get());
-
         model.addAttribute("pizza", pizza.get());
-        model.addAttribute("offers", offers);
-
+        model.addAttribute("offers", pizza.get().getOffers());
+        model.addAttribute("ingredients", pizza.get().getIngredients());
         return "pizzas/show";
     }
 
     @GetMapping("/create")
     public String getCreate(Model model) {
-
         model.addAttribute("pizza", new Pizza());
-
+        model.addAttribute("ingredients", ingredientRepository.findAll());
         return "pizzas/create";
     }
 
     @PostMapping("/create")
     public String postStore(@Valid @ModelAttribute("pizza") Pizza pizzaForm, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
+            model.addAttribute("ingredients", ingredientRepository.findAll());
             return "/pizzas/create";
         }
 
         pizzaRepository.save(pizzaForm);
-
         return "redirect:/pizzas";
     }
 
     @GetMapping("/edit/{id}")
     public String getEdit(Model model, @PathVariable("id") Integer pizzaId) {
         Optional<Pizza> pizza = pizzaRepository.findById(pizzaId);
+        model.addAttribute("ingredients", ingredientRepository.findAll());
 
         if (pizza.isEmpty()) {
             model.addAttribute("pizza", new Pizza());
@@ -99,6 +103,7 @@ public class PizzaController {
     public String postUpdate(@Valid @ModelAttribute("pizza") Pizza pizzaForm, BindingResult bindingResult,
             Model model) {
         if (bindingResult.hasErrors()) {
+            model.addAttribute("ingredients", ingredientRepository.findAll());
             return "/pizzas/edit";
         }
 
