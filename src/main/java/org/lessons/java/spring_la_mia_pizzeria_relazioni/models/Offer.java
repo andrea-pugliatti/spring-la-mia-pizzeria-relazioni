@@ -11,6 +11,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "offers")
@@ -20,6 +21,7 @@ public class Offer {
     private Integer id;
 
     @NotBlank(message = "Il titolo deve essere inserito!")
+    @Size(max = 30, message = "Il titolo è troppo lungo!")
     private String title;
 
     @NotNull(message = "Inserisci una data di inizio!")
